@@ -13,7 +13,7 @@ listGreeting=[
 
 listAppetizers=[
     'Appetizers',
-    '----------',
+    '__________',
     'Wings',
     'Cookies',
     'Spring Rolls']
@@ -68,7 +68,10 @@ dictCustOrder={}
 
 def printMessage(message:list[str]):
     #TODO: remove leading space
-    print("\n","\n".join(message),"\n")
+    listMessage = "\n".join(message)
+    listMessage = "\n"+listMessage+'\n'
+    print(listMessage)
+
 
 def formateOrder(key:str,value:int)->str:
     strS, strAdj = ["s","have"] if value>1 else ["","has"]
