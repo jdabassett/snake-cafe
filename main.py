@@ -3,12 +3,13 @@ from collections import Counter
 from time import sleep
 from random import random
 
-listGreeting=['**************************************'
-,'**    Welcome to the Snakes Cafe!   **'
-,'**    Please see our menu below.    **'
-,'**'
-,'** To quit at any time, type "quit" **'
-,'**************************************']
+listGreeting=[
+'************************************************************',
+'**               Welcome to the Snakes Cafe!              **',
+'**               Please see our menu below.               **',
+'**                                                        **',
+'**             To quit at any time, type "quit"           **',
+'************************************************************']
 
 listAppetizers=[
     'Appetizers',
@@ -45,14 +46,16 @@ listDrinks=[
 listMenu=[*listAppetizers,"",*listEntrees,"",*listDesserts,"",*listDrinks]
 
 listOrderPrompt=[
-    '***********************************',
-    '** What would you like to order? **',
-    '***********************************'
+    '************************************************************',
+    '**             What would you like to order?              **',
+    '************************************************************'
 ]
 
 listWarning=[
-    "**      I'm sorry I didn't get that.    **",
-    '** Please enter any item from the menu. **'
+    '************************************************************',
+    "**               I'm sorry I didn't get that.             **",
+    '**           Please enter any item from the menu.         **',
+    '************************************************************'
 ]
 
 
@@ -69,11 +72,11 @@ def printMessage(message:list[str]):
 
 def formateOrder(key:str,value:int)->str:
     strS, strAdj = ["s","have"] if value>1 else ["","has"]
-    return f'** {value} order{strS} of {key} {strAdj} been added to your meal **'
+    return f'{value} order{strS} of {key} {strAdj} been added to your meal'.center(56," ").center(60,"*")
 
 def finalFormateOrder(key:str,value:int)->str:
-    strS = "s" if value>1 else ""
-    return f'** {value} order{strS} of {key} **'
+    strS = "s" if value>1 and key[-1]!='s' else ""
+    return f'{value} {key}{strS}'.center(56," ").center(60,"*")
 
 def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:dict[str,int])->dict[str,int]:
     for i in ['greeting','menu','orderPrompt']:
