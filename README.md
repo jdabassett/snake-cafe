@@ -26,10 +26,10 @@ SETUP:
 
 TESTS:
 
-    * INSTRUCTIONS: NA
+    * INSTRUCTIONS: Use the run command in the terminal to run the script. Read the instructions carefully and type 'quit' or 'ctrl-c' to exit the script at any moment.
     
-    * NOTES:
+    * NOTES: You can also request any off menu items. Knock yourself out!
 
-NOTES:
+PRODUCTION NOTES:
 
     * NA
