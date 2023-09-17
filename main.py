@@ -62,12 +62,11 @@ listWarning=[
 
 dictResponses={'greeting':listGreeting,'appetizers':listAppetizers,'entrees':listEntrees,'desserts':listDesserts,'drinks':listDrinks,'menu':listMenu,'orderPrompt':listOrderPrompt,'warning':listWarning}
 
-dictMenuOptions=Counter([*listAppetizers[2:],*listEntrees[2:],*listDesserts[2:],*listDrinks[2:]])
+# dictMenuOptions=Counter([*listAppetizers[2:],*listEntrees[2:],*listDesserts[2:],*listDrinks[2:]])
 
 dictCustOrder={}
 
 def printMessage(message:list[str]):
-    #TODO: remove leading space
     listMessage = "\n".join(message)
     listMessage = "\n"+listMessage+'\n'
     print(listMessage)
@@ -81,7 +80,9 @@ def finalFormateOrder(key:str,value:int)->str:
     strS = "s" if value>1 and key[-1]!='s' else ""
     return f'{value} {key}{strS}'.center(56," ").center(60,"*")
 
-def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:dict[str,int])->dict[str,int]:
+def whileOrdering(dictRes:dict[str,int],dictCustOrd:dict[str,int])->None:
+    #dictMenuOpt:dict[str,int]
+
     for i in ['greeting','menu','orderPrompt']:
         printMessage(dictRes[i])
 
@@ -102,7 +103,8 @@ def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:di
             printMessage(['**********  Exiting...   **********'])
             sleep(2.5)
             break
-        elif strInput in dictMenuOpt:
+        # elif strInput in dictMenuOpt:
+        else:
             if strInput in dictCustOrd:
                 dictCustOrd[strInput]+=1
             else:
@@ -112,8 +114,8 @@ def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:di
 
             printMessage([strCurrOrder])
 
-        else:
-            printMessage(dictRes['warning'])
+        # else:
+        #     printMessage(dictRes['warning'])
 
 
 
@@ -122,4 +124,4 @@ def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:di
 
 
 if __name__=='__main__':
-    custOrder=whileOrdering(dictMenuOptions,dictResponses,dictCustOrder)
+    whileOrdering(dictResponses,dictCustOrder)
