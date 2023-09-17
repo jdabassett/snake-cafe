@@ -42,7 +42,7 @@ listDrinks=[
     'Unicorn Tears'
 ]
 
-listMenu=[*listAppetizers,*listEntrees,*listDesserts,*listDrinks]
+listMenu=[*listAppetizers,"",*listEntrees,"",*listDesserts,"",*listDrinks]
 
 listOrderPrompt=[
     '***********************************',
@@ -51,7 +51,7 @@ listOrderPrompt=[
 ]
 
 listWarning=[
-    "**      I'm sorry I didn't get that.    **"
+    "**      I'm sorry I didn't get that.    **",
     '** Please enter any item from the menu. **'
 ]
 
@@ -62,19 +62,20 @@ dictResponses={'greeting':listGreeting,'appetizers':listAppetizers,'entrees':lis
 dictMenuOptions=Counter([*listAppetizers[2:],*listEntrees[2:],*listDesserts[2:],*listDrinks[2:]])
 
 dictCustOrder={}
-listCustOrder=[]
 
-def printMessage(message:str):
+def printMessage(message:list[str]):
     #TODO: remove leading space
     print("\n","\n".join(message),"\n")
 
 def formateOrder(key:str,value:int)->str:
     strS, strAdj = ["s","have"] if value>1 else ["","has"]
-    print(strS,strAdj)
     return f'** {value} order{strS} of {key} {strAdj} been added to your meal **'
 
-#TODO: add parameter types
-def whileOrdering(dictMenuOpt,dictRes,dictCustOrd,listCustOrd)->list:
+def finalFormateOrder(key:str,value:int)->str:
+    strS = "s" if value>1 else ""
+    return f'** {value} order{strS} of {key} **'
+
+def whileOrdering(dictMenuOpt:dict[str,int],dictRes:dict[str,int],dictCustOrd:dict[str,int])->dict[str,int]:
     for i in ['greeting','menu','orderPrompt']:
         printMessage(dictRes[i])
 
@@ -82,11 +83,18 @@ def whileOrdering(dictMenuOpt,dictRes,dictCustOrd,listCustOrd)->list:
 
     while True:
         strInput = input("> ")
-        sleep(random()*2)
+        sleep(random()*1)
 
         if strInput == 'quit' or strInput =='q':
+            if dictCustOrd:
+                listCustOrder=[finalFormateOrder(key,value) for key,value in dictCustOrd.items()]
+                intLength=len(listCustOrder[0])
+                strDivider="*"*intLength
+                strOrderHeader="Your order:".center(intLength-4," ").center(intLength,"*")
+                printMessage([strDivider,strOrderHeader,*listCustOrder,strDivider])
+
             printMessage(['**********  Exiting...   **********'])
-            sleep(4.5)
+            sleep(2.5)
             break
         elif strInput in dictMenuOpt:
             if strInput in dictCustOrd:
@@ -95,8 +103,6 @@ def whileOrdering(dictMenuOpt,dictRes,dictCustOrd,listCustOrd)->list:
                 dictCustOrd[strInput]=1
 
             strCurrOrder = formateOrder(strInput,dictCustOrd[strInput])
-
-            listCustOrd= listCustOrd.append(strCurrOrder)
 
             printMessage([strCurrOrder])
 
@@ -110,4 +116,4 @@ def whileOrdering(dictMenuOpt,dictRes,dictCustOrd,listCustOrd)->list:
 
 
 if __name__=='__main__':
-    custOrder=whileOrdering(dictMenuOptions,dictResponses,dictCustOrder,listCustOrder)
+    custOrder=whileOrdering(dictMenuOptions,dictResponses,dictCustOrder)
